@@ -99,3 +99,5 @@ class CustomEvents extends React.Component {
         return <Component data-synth-id={this.id} {...props} />;
     }
 }
+
+export default CustomEvents;
