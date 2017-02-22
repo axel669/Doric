@@ -23,12 +23,14 @@ componentStyleSheet.addStyles({
 
 const Grid = props => {
     const {
-        cellSpacingH = 0,
-        cellSpacingV = 0,
+        // cellSpacingH = 0,
+        // cellSpacingV = 0,
+        cellSpacing = [0, 0],
         cellHeight = 30,
         colCount = 12,
         style = {}
     } = props;
+    const [cellSpacingH, cellSpacingV] = (typeof cellSpacing === 'number') ? [cellSpacing, cellSpacing] : cellSpacing;
     const gridStyle = {
         ...style,
         paddingLeft: cellSpacingH,

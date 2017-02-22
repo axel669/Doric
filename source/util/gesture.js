@@ -124,7 +124,7 @@ window.addEventListener(
             });
         });
     },
-    true
+    false
 );
 window.addEventListener(
     "touchmove",
@@ -149,7 +149,7 @@ window.addEventListener(
             });
         });
     },
-    true
+    false
 );
 window.addEventListener(
     "touchend",
@@ -173,7 +173,6 @@ window.addEventListener(
             somethingEditable = false;
             currentNode = data.target;
             while (true) {
-                // console.log(currentNode);
                 if (currentNode.getAttribute !== undefined && currentNode.getAttribute("contenteditable") === true) {
                     somethingEditable = true;
                     break;
@@ -202,7 +201,7 @@ window.addEventListener(
             touchDataLast[touch.id] = null;
         });
     },
-    true
+    false
 );
 
 (() => {

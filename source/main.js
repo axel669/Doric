@@ -26,6 +26,23 @@ import Toggle from 'component/Toggle';
 import {CSS} from 'util/stylesheet';
 import componentStyleSheet from 'util/app';
 
+window.Doric = {
+    Button,
+    Card,
+    CenterContent,
+    AlignContent,
+    Checkbox,
+    CustomEvents,
+    Grid,
+    Icon,
+    IconButton,
+    Image,
+    Pinboard,
+    Progress,
+    Spinner,
+    Toggle
+};
+
 Math.rand = (a, b = null) => {
     if (b === null) {
         b = a;
@@ -37,15 +54,12 @@ Math.rand = (a, b = null) => {
 window.cblog = console.log.bind(console);
 window.cberr = console.error.bind(console);
 
-// App.start(
-//     <Route path="/" component={() => <UI.Screen title="HI CJ" />} />
-// );
-
 if (String.prototype.repeat === undefined) {
     String.prototype.repeat = function (n) {
         let res = "";
         while (n > 0) {
             res += this;
+            n -= 1;
         }
         return res;
     };
@@ -151,6 +165,53 @@ const wideIMGurl = "http://pre09.deviantart.net/e5d4/th/pre/f/2011/259/c/a/bayon
 // const wideIMGurl = "http://www.ffwa.eu/ff9/images/wallpaper/iifa-1024.jpg";
 // const wideIMGurl = "http://a3.mzstatic.com/jp/r30/Purple/v4/d7/12/51/d71251a5-1f50-f6bc-d56a-8740ea2532fb/screen1136x1136.jpeg";
 
+
+componentStyleSheet.addStyles({
+    "doric-input": {
+        display: 'inline-block',
+        position: 'relative',
+        top: 0,
+        left: 0,
+        width: '100%'
+    },
+    "doric-input > input": {
+        width: '100%',
+        borderWidth: 0,
+        padding: 5,
+        borderBottom: `2px solid ${consts.theme.grayBG}`
+    },
+    "doric-input > input:focus": {
+        outline: 'none'
+    },
+    "doric-input > input + doric-input-flourish": {
+        position: 'absolute',
+        height: 2,
+        backgroundColor: consts.theme.bluish,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        transform: 'scaleX(0)'
+    },
+    "doric-input > input:focus + doric-input-flourish": {
+        transition: 'transform 100ms linear',
+        transform: 'scaleX(1)'
+    }
+});
+const TextInput = props => {
+    const {
+        value = "",
+        onChange = () => {},
+        type = "text"
+    } = props;
+    return (
+        <doric-input>
+            <input type="text" {...{type, onChange, value}} />
+            <doric-input-flourish />
+        </doric-input>
+    );
+    // return <doric-input type="text" contenteditable />
+};
+
 class Main  extends React.Component {
     constructor(props) {
         super(props);
@@ -163,24 +224,25 @@ class Main  extends React.Component {
     }
 
     render = () => {
-        const cells = range.array(11, n => <div style={{display: 'table-cell', width: '53.333333%', border: '1px solid black'}}>{n}</div>);
-        const rows = cells.reduce(
-            (rows, cell, index) => {
-                let current = rows[rows.length - 1];
-                current.push(cell);
-                if (current.length === 3 || index === cells.length - 1) {
-                    current = <div style={{display: 'table-row'}}>{current}</div>;
-                    rows[rows.length - 1] = current;
-                    rows.push([]);
-                }
-                return rows;
-            },
-            [[]]
-        ).slice(0, -1);
-        const f = 100 / 12;
+        // const cells = range.array(11, n => <div style={{display: 'table-cell', width: '53.333333%', border: '1px solid black'}}>{n}</div>);
+        // const rows = cells.reduce(
+        //     (rows, cell, index) => {
+        //         let current = rows[rows.length - 1];
+        //         current.push(cell);
+        //         if (current.length === 3 || index === cells.length - 1) {
+        //             current = <div style={{display: 'table-row'}}>{current}</div>;
+        //             rows[rows.length - 1] = current;
+        //             rows.push([]);
+        //         }
+        //         return rows;
+        //     },
+        //     [[]]
+        // ).slice(0, -1);
+        // const f = 100 / 12;
 
         return (
             <div style={{width: '100%', height: '100%'}}>
+                <TextInput value="" />
             </div>
         );
     }
