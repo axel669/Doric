@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStyleSheet, genCSS} from 'util/stylesheet';
 
@@ -20,12 +21,15 @@ head.appendChild(appStyle);
 
 window.App = {
     async render(content) {
+        const wrapper = (
+            <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden'}}>{content}</div>
+        );
         if (initCalled === false) {
             await deviceReady;
             componentStyleSheet.__init(roboto);
             initCalled = true;
         }
-        ReactDOM.render(content, document.body);
+        ReactDOM.render(wrapper, document.body);
         App.styleSheet.__init(appStyle);
         App.styleSheet = createStyleSheet();
     },

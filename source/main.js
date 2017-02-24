@@ -172,16 +172,41 @@ componentStyleSheet.addStyles({
         position: 'relative',
         top: 0,
         left: 0,
-        width: '100%'
+        display: 'block',
+        margin: 3,
+        paddingTop: 22,
+        backgroundColor: 'white'
     },
     "doric-input > input": {
         width: '100%',
         borderWidth: 0,
         padding: 5,
-        borderBottom: `2px solid ${consts.theme.grayBG}`
+        borderBottom: `2px solid ${consts.theme.grayBG}`,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: 0,
+        left: 0,
+        zIndex: "+1"
     },
     "doric-input > input:focus": {
         outline: 'none'
+    },
+    "doric-input > doric-input-label": {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: 22,
+        transformOrigin: 'left top',
+        transform: 'translate(0, 3px) scale(0.85)',
+        transition: 'transform 150ms linear'
+    },
+    "doric-input > input:focus ~ doric-input-label:not([placeholder])": {
+        color: '#435dec'
+    },
+    "doric-input > doric-input-label[placeholder]": {
+        transform: 'translate(5px, 100%)',
+        color: 'gray'
     },
     "doric-input > input + doric-input-flourish": {
         position: 'absolute',
@@ -190,7 +215,8 @@ componentStyleSheet.addStyles({
         left: 0,
         right: 0,
         bottom: 0,
-        transform: 'scaleX(0)'
+        transform: 'scaleX(0)',
+        zIndex: "+2"
     },
     "doric-input > input:focus + doric-input-flourish": {
         transition: 'transform 100ms linear',
@@ -200,26 +226,41 @@ componentStyleSheet.addStyles({
 const TextInput = props => {
     const {
         value = "",
-        onChange = () => {},
-        type = "text"
+        type = "text",
+        label = null
     } = props;
+    const labelProps = {
+        placeholder: (value === "" || value === null) ? "" : null
+    };
+    const poc = props.onChange || () => {};
+    const onChange = evt => poc(evt.target.value, evt);
+
     return (
         <doric-input>
-            <input type="text" {...{type, onChange, value}} />
+            <input {...{type, onChange, value}} />
             <doric-input-flourish />
+            <doric-input-label {...labelProps}>{label}</doric-input-label>
         </doric-input>
     );
     // return <doric-input type="text" contenteditable />
 };
 
-class Main  extends React.Component {
+const Input = {
+    Text: props => <TextInput {...props} type="text" />,
+    Password: props => <TextInput {...props} type="password" />,
+    Search: props => <TextInput {...props} type="search" />,
+};
+
+class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             progress: 0.3,
             secondary: 0.7,
             checked: false,
-            toggle: false
+            toggle: false,
+            text: "",
+            text2: ""
         };
     }
 
@@ -242,7 +283,9 @@ class Main  extends React.Component {
 
         return (
             <div style={{width: '100%', height: '100%'}}>
-                <TextInput value="" />
+                <Input.Text value={this.state.text} onChange={text => this.setState({text})} label="Username" />
+                <Input.Search value={this.state.text} onChange={text => this.setState({text})} label="Searchy" />
+                <Input.Password value={this.state.text2} onChange={text2 => this.setState({text2})} label="Password" />
             </div>
         );
     }

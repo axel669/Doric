@@ -185,7 +185,7 @@ window.addEventListener(
             }
 
             // if (editableTagNames.indexOf(targetTagName) === -1 && somethingEditable === false && evt.cancelable === true) {
-            if (evt.cancelable === true) {
+            if (evt.cancelable === true && editableTagNames.indexOf(targetTagName) === -1) {
                 evt.preventDefault();
             }
 
