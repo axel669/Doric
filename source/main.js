@@ -223,32 +223,59 @@ componentStyleSheet.addStyles({
         transform: 'scaleX(1)'
     }
 });
-const TextInput = props => {
-    const {
-        value = "",
-        type = "text",
-        label = null
-    } = props;
-    const labelProps = {
-        placeholder: (value === "" || value === null) ? "" : null
-    };
-    const poc = props.onChange || () => {};
-    const onChange = evt => poc(evt.target.value, evt);
+class TextInput extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-    return (
-        <doric-input>
-            <input {...{type, onChange, value}} />
-            <doric-input-flourish />
-            <doric-input-label {...labelProps}>{label}</doric-input-label>
-        </doric-input>
-    );
-    // return <doric-input type="text" contenteditable />
-};
+    render = () => {
+        const {
+            value = "",
+            type = "text",
+            label = null
+        } = this.props;
+        const labelProps = {
+            placeholder: (value === "" || value === null) ? "" : null
+        };
+        const poc = this.props.onChange || () => {};
+        const onChange = evt => poc(evt.target.value, evt);
+
+        return (
+            <CustomEvents component="doric-input" onTap={() => this.refs.textInput.focus()}>
+                <input {...{type, onChange, value}} ref="textInput" />
+                <doric-input-flourish />
+                <doric-input-label {...labelProps}>{label}</doric-input-label>
+            </CustomEvents>
+        );
+    }
+}
+// const TextInput = props => {
+//     const {
+//         value = "",
+//         type = "text",
+//         label = null
+//     } = props;
+//     const labelProps = {
+//         placeholder: (value === "" || value === null) ? "" : null
+//     };
+//     const poc = props.onChange || () => {};
+//     const onChange = evt => poc(evt.target.value, evt);
+//
+//     return (
+//         <doric-input>
+//             <input {...{type, onChange, value}} />
+//             <doric-input-flourish />
+//             <doric-input-label {...labelProps}>{label}</doric-input-label>
+//         </doric-input>
+//     );
+// };
 
 const Input = {
     Text: props => <TextInput {...props} type="text" />,
     Password: props => <TextInput {...props} type="password" />,
     Search: props => <TextInput {...props} type="search" />,
+    URL: props => <TextInput {...props} type="url" />,
+    Email: prop => <TextInput {...props} type="email" />
 };
 
 class Main extends React.Component {
@@ -283,9 +310,11 @@ class Main extends React.Component {
 
         return (
             <div style={{width: '100%', height: '100%'}}>
-                <Input.Text value={this.state.text} onChange={text => this.setState({text})} label="Username" />
-                <Input.Search value={this.state.text} onChange={text => this.setState({text})} label="Searchy" />
-                <Input.Password value={this.state.text2} onChange={text2 => this.setState({text2})} label="Password" />
+                <Doric.Card title="Testing">
+                    <Input.Text value={this.state.text} onChange={text => this.setState({text})} label="Username" />
+                    <Input.Search value={this.state.text} onChange={text => this.setState({text})} label="Searchy" />
+                    <Input.Password value={this.state.text2} onChange={text2 => this.setState({text2})} label="Password" />
+                </Doric.Card>
             </div>
         );
     }

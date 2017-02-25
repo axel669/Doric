@@ -9,7 +9,8 @@ componentStyleSheet.addStyles({
         boxShadow: theme.general.boxShadow,
         margin: 5,
         borderRadius: 3,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: 'white'
     },
     "doric-card .content": {
         padding: 5
