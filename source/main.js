@@ -275,8 +275,63 @@ const Input = {
     Password: props => <TextInput {...props} type="password" />,
     Search: props => <TextInput {...props} type="search" />,
     URL: props => <TextInput {...props} type="url" />,
-    Email: prop => <TextInput {...props} type="email" />
+    Email: props => <TextInput {...props} type="email" />,
+    Number: props => <TextInput {...props} type="number" />
 };
+
+
+componentStyleSheet.addStyles({
+    "doric-range-input": {
+        display: 'block',
+        position: 'relative',
+        top: 0,
+        left: 0,
+        height: 30
+    },
+    "doric-range-input-track": {
+        position: 'absolute',
+        top: 13,
+        left: 12,
+        right: 12,
+        height: 4,
+        backgroundColor: consts.theme.grayBG
+    },
+    "doric-range-input-thumb": {
+        position: 'absolute',
+        top: -10,
+        width: 24,
+        height: 24,
+        borderRadius: 15,
+        backgroundColor: consts.theme.bluish,
+        boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.25)',
+        transform: 'translateX(-12px)'
+    }
+});
+class RangeInput extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render = () => {
+        const {min = 0, max = 10, value} = this.props;
+        const pos = (value - min) / (max - min);
+        const thumbStyle = {
+            left: `${pos * 100}%`
+        };
+
+        const test = evt => {
+            console.log(evt);
+        };
+
+        return (
+            <doric-range-input>
+                <doric-range-input-track>
+                    <doric-range-input-thumb style={thumbStyle} onTouchMove={test} />
+                </doric-range-input-track>
+            </doric-range-input>
+        );
+    }
+}
 
 class Main extends React.Component {
     constructor(props) {
@@ -287,7 +342,8 @@ class Main extends React.Component {
             checked: false,
             toggle: false,
             text: "",
-            text2: ""
+            text2: "",
+            num: 0
         };
     }
 
@@ -311,9 +367,7 @@ class Main extends React.Component {
         return (
             <div style={{width: '100%', height: '100%'}}>
                 <Doric.Card title="Testing">
-                    <Input.Text value={this.state.text} onChange={text => this.setState({text})} label="Username" />
-                    <Input.Search value={this.state.text} onChange={text => this.setState({text})} label="Searchy" />
-                    <Input.Password value={this.state.text2} onChange={text2 => this.setState({text2})} label="Password" />
+                    <RangeInput value={3} />
                 </Doric.Card>
             </div>
         );
