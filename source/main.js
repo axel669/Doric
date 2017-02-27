@@ -249,26 +249,6 @@ class TextInput extends React.Component {
         );
     }
 }
-// const TextInput = props => {
-//     const {
-//         value = "",
-//         type = "text",
-//         label = null
-//     } = props;
-//     const labelProps = {
-//         placeholder: (value === "" || value === null) ? "" : null
-//     };
-//     const poc = props.onChange || () => {};
-//     const onChange = evt => poc(evt.target.value, evt);
-//
-//     return (
-//         <doric-input>
-//             <input {...{type, onChange, value}} />
-//             <doric-input-flourish />
-//             <doric-input-label {...labelProps}>{label}</doric-input-label>
-//         </doric-input>
-//     );
-// };
 
 const Input = {
     Text: props => <TextInput {...props} type="text" />,
@@ -279,7 +259,7 @@ const Input = {
     Number: props => <TextInput {...props} type="number" />
 };
 
-
+const find = Array.prototype.find;
 componentStyleSheet.addStyles({
     "doric-range-input": {
         display: 'block',
@@ -310,23 +290,56 @@ componentStyleSheet.addStyles({
 class RangeInput extends React.Component {
     constructor(props) {
         super(props);
+        this.touchID = null;
+    }
+
+    touchStart = (evt) => {
+        if (this.touchID !== null) {
+            return;
+        }
+        const [touch] = evt.changedTouches;
+        const track = this.refs.track.getBoundingClientRect();
+        const thumb = this.refs.thumb.getBoundingClientRect();
+        this.range = track.width;
+        this.startPos = track.left;
+        this.touchStartPos = touch.clientX;
+        this.touchID = touch.identifier;
+    }
+    touchMove = (evt) => {
+        const touch = evt.changedTouches::find(touch => touch.identifier === this.touchID);
+        if (touch === undefined) {
+            return;
+        }
+    }
+
+    componentDidMount = () => {
+        this.refs.thumb.addEventListener(
+            'touchmove',
+            evt => {
+                evt.preventDefault();
+            },
+            {passive: false, capture: true}
+        );
     }
 
     render = () => {
-        const {min = 0, max = 10, value} = this.props;
+        const {min = 0, max = 10, value, color} = this.props;
         const pos = (value - min) / (max - min);
         const thumbStyle = {
-            left: `${pos * 100}%`
+            left: `${pos * 100}%`,
+            backgroundColor: color
         };
 
-        const test = evt => {
-            console.log(evt);
+        const events = {
+            onTouchStart: this.touchStart,
+            onTouchMove: this.touchMove,
+            onTouchEnd: () => this.touchID = null
         };
 
         return (
             <doric-range-input>
-                <doric-range-input-track>
-                    <doric-range-input-thumb style={thumbStyle} onTouchMove={test} />
+                <doric-range-input-track ref="track">
+                    <doric-range-input-thumb ref="thumb" style={thumbStyle} {...events} />
                 </doric-range-input-track>
             </doric-range-input>
         );
@@ -366,9 +379,13 @@ class Main extends React.Component {
 
         return (
             <div style={{width: '100%', height: '100%'}}>
-                <Doric.Card title="Testing">
-                    <RangeInput value={3} />
-                </Doric.Card>
+                <div style={{width: '100%', height: '100%', overflow: 'auto'}}>
+                    <Doric.Card title="Testing">
+                        <RangeInput value={3} />
+                        <input type="range" value={this.state.num} onChange={evt => this.setState({num: evt.target.value})} />
+                    </Doric.Card>
+                    {range.array(30, n => <div>{n}</div>)}
+                </div>
             </div>
         );
     }

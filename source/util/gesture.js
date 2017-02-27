@@ -1,5 +1,18 @@
 import Env from "util/env";
 
+const addEventListener = EventTarget.prototype.addEventListener;
+
+EventTarget.prototype.addEventListener = function (type, listener, opts = false) {
+    if (Env.events.passive === false && typeof opts === 'object') {
+        opts = opts.capture || false;
+    }
+    if (Env.events.passive === true && typeof opts === 'boolean') {
+        opts = {capture: opts};
+    }
+    this::addEventListener(type, listener, opts);
+    // console.log(`adding: ${type}, support: passive(${Env.events.passive}).once(${Env.events.once})`);
+};
+
 const forEach = Array.prototype.forEach;
 const schedule = (time, func) => setTimeout(func, time);
 
@@ -92,21 +105,6 @@ window.addEventListener(
         if (enabled === false) {
             return;
         }
-
-        // console.log(evt.changedTouches);
-        //
-        // const touch = evt.changedTouches[0];
-        // const data = touchData(touch, evt, evt.target);
-        //
-        // touchDataStart[data.id] = data;
-        // touchDataLast[data.id] = data;
-        //
-        // registeredHandlers.forEach(handlerName => {
-        //     const handler = registeredCallbacks[handlerName];
-        //
-        //     touchVars[handlerName][data.id] = {};
-        //     handler.start({touch: data, vars: touchVars[handlerName][data.id]});
-        // });
 
         changedTouches::forEach(touch => {
             const data = touchData(touch, evt);
