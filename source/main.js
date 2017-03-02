@@ -274,19 +274,38 @@ componentStyleSheet.addStyles({
         left: 12,
         right: 12,
         height: 4,
-        backgroundColor: consts.theme.grayBG
+        backgroundColor: consts.theme.grayBG,
+        overflow: 'visible'
+    },
+    "doric-range-input-track-fill": {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: consts.theme.bluish,
+        transformOrigin: 'left center',
+        // transition: 'transform 100ms linear'
     },
     "doric-range-input-thumb": {
         position: 'absolute',
-        top: -10,
-        width: 24,
-        height: 24,
+        top: 2,
+        width: '100%',
+        height: 0,
+        overflow: 'visible',
+        // transition: 'left 100ms linear'
+    },
+    "doric-range-input-track-circle": {
+        display: 'block',
+        width: 20,
+        height: 20,
         borderRadius: 15,
         backgroundColor: consts.theme.bluish,
         boxShadow: '1px 1px 1px rgba(0, 0, 0, 0.25)',
-        transform: 'translateX(-12px)'
+        transform: 'translate(-50%, -50%)',
     }
 });
+const clampNormal = value => Math.min(1, Math.max(0, value));
 class RangeInput extends React.Component {
     constructor(props) {
         super(props);
@@ -300,8 +319,10 @@ class RangeInput extends React.Component {
         const [touch] = evt.changedTouches;
         const track = this.refs.track.getBoundingClientRect();
         const thumb = this.refs.thumb.getBoundingClientRect();
+        console.log(thumb);
         this.range = track.width;
         this.startPos = track.left;
+        this.startValue = thumb.left - track.left;
         this.touchStartPos = touch.clientX;
         this.touchID = touch.identifier;
     }
@@ -309,6 +330,19 @@ class RangeInput extends React.Component {
         const touch = evt.changedTouches::find(touch => touch.identifier === this.touchID);
         if (touch === undefined) {
             return;
+        }
+
+        const {min = 0, max = 10, step = 1, onChange = () => {}, value} = this.props;
+        const offset = touch.clientX - this.touchStartPos;
+        const pos = this.startValue + offset;
+
+        const range = max - min;
+        let newValue = range * clampNormal(pos / this.range) + min;
+
+        newValue = Math.round(newValue / step) * step;
+
+        if (newValue !== value) {
+            onChange(newValue);
         }
     }
 
@@ -326,7 +360,10 @@ class RangeInput extends React.Component {
         const {min = 0, max = 10, value, color} = this.props;
         const pos = (value - min) / (max - min);
         const thumbStyle = {
-            left: `${pos * 100}%`,
+            left: `${pos * 100}%`
+        };
+        const fillStyle = {
+            transform: `scaleX(${pos})`,
             backgroundColor: color
         };
 
@@ -335,11 +372,15 @@ class RangeInput extends React.Component {
             onTouchMove: this.touchMove,
             onTouchEnd: () => this.touchID = null
         };
+        const thumb = <doric-range-input-track-circle style={{backgroundColor: color}} />;
 
         return (
             <doric-range-input>
                 <doric-range-input-track ref="track">
-                    <doric-range-input-thumb ref="thumb" style={thumbStyle} {...events} />
+                    <doric-range-input-track-fill style={fillStyle} />
+                    <doric-range-input-thumb ref="thumb" style={thumbStyle} {...events}>
+                        {thumb}
+                    </doric-range-input-thumb>
                 </doric-range-input-track>
             </doric-range-input>
         );
@@ -356,7 +397,10 @@ class Main extends React.Component {
             toggle: false,
             text: "",
             text2: "",
-            num: 0
+            num: 0,
+            r: 0,
+            g: 0,
+            b: 0
         };
     }
 
@@ -381,8 +425,12 @@ class Main extends React.Component {
             <div style={{width: '100%', height: '100%'}}>
                 <div style={{width: '100%', height: '100%', overflow: 'auto'}}>
                     <Doric.Card title="Testing">
-                        <RangeInput value={3} />
-                        <input type="range" value={this.state.num} onChange={evt => this.setState({num: evt.target.value})} />
+                        <RangeInput value={this.state.r} onChange={r => this.setState({r})} color={CSS.rgb(this.state.r, 0, 0)} min={0} max={255} />
+                        <RangeInput value={this.state.g} onChange={g => this.setState({g})} color={CSS.rgb(0, this.state.g, 0)} min={0} max={255} />
+                        <RangeInput value={this.state.b} onChange={b => this.setState({b})} color={CSS.rgb(0, 0, this.state.b)} min={0} max={255} />
+                        <div style={{height: 35, backgroundColor: CSS.rgb(this.state.r, this.state.g, this.state.b)}} />
+                        {/*<RangeInput value={this.state.num} onChange={num => this.setState({num})} color={CSS.rgb(0, this.state.num, this.state.num)} min={0} max={255} />*/}
+                        <input type="range" value={this.state.num} onChange={evt => this.setState({num: evt.target.value})} min={0} max={10} />
                     </Doric.Card>
                     {range.array(30, n => <div>{n}</div>)}
                 </div>
