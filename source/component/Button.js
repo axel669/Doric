@@ -1,9 +1,9 @@
 import React from 'react';
 
-import componentStyleSheet from 'util/app';
-import theme from 'util/theme';
+import componentStyleSheet from 'source/util/app';
+import theme from 'source/util/theme';
 
-import CustomEvents from "component/CustomEvents";
+import CustomEvents from "source/component/CustomEvents";
 
 componentStyleSheet.addStyles({
     "doric-button": {

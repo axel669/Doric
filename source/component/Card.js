@@ -1,7 +1,7 @@
 import React from 'react';
 
-import componentStyleSheet from 'util/app';
-import theme from 'util/theme';
+import componentStyleSheet from 'source/util/app';
+import theme from 'source/util/theme';
 
 componentStyleSheet.addStyles({
     "doric-card": {

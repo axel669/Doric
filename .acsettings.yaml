@@ -1,0 +1,4 @@
+main: source/main.js
+output: app.js
+longErrors: true
+debug: true

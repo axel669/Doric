@@ -1,11 +1,11 @@
 import React from 'react';
 
-import componentStyleSheet from 'util/app';
-import consts from 'util/consts';
-import {CSS} from 'util/stylesheet';
+import componentStyleSheet from 'source/util/app';
+import consts from 'source/util/consts';
+import {CSS} from 'source/util/stylesheet';
 
-import CustomEvents from "component/CustomEvents";
-import {CenterContent} from 'component/ContentAligners';
+import CustomEvents from "source/component/CustomEvents";
+import {CenterContent} from 'source/component/ContentAligners';
 
 componentStyleSheet.addStyles({
     "doric-toggle": {

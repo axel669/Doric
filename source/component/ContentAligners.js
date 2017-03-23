@@ -1,6 +1,6 @@
 import React from 'react';
 
-import componentStyleSheet from 'util/app';
+import componentStyleSheet from 'source/util/app';
 
 componentStyleSheet.addStyles({
     "doric-center-content": {
@@ -31,7 +31,7 @@ const AlignContent = ({width, height, className = "", block, horizontal = "cente
             justifyContent: horizontal
         }} />;
 
-export default {
+export {
     CenterContent,
     AlignContent
 };

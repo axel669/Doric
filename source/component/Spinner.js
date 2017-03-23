@@ -1,8 +1,8 @@
 import React from 'react';
 
-import componentStyleSheet from 'util/app';
-import consts from 'util/consts';
-import {CenterContent} from 'component/ContentAligners';
+import componentStyleSheet from 'source/util/app';
+import consts from 'source/util/consts';
+import {CenterContent} from 'source/component/ContentAligners';
 
 componentStyleSheet.addStyles({
     "@keyframes spinner-rotate": {

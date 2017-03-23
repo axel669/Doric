@@ -118,4 +118,4 @@ const CSS = Object.freeze({
     rgb: (r, g, b) => CSS.rgba(r, g, b, 1)
 });
 
-export default {createStyleSheet, genCSS, CSS};
+export {createStyleSheet, genCSS, CSS};

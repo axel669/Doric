@@ -1,30 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import icons from 'util/icons';
-import {warningFunc} from 'util/utils';
-import consts from 'util/consts';
+import icons from 'source/util/icons';
+import {warningFunc} from 'source/util/utils';
+import consts from 'source/util/consts';
 
-import "util/chrono";
-import "util/gesture";
-import "util/deviceready";
+import "source/util/chrono";
+import "source/util/gesture";
+import "source/util/deviceready";
 
-import theme from 'util/theme';
-import Button from 'component/Button';
-import Card from 'component/Card';
-import {CenterContent, AlignContent} from 'component/ContentAligners';
-import Checkbox from 'component/Checkbox';
-import CustomEvents from "component/CustomEvents";
-import Grid from 'component/Grid';
-import {Icon, IconButton} from 'component/Icon';
-import Image from 'component/Image';
-import Pinboard from 'component/Pinboard';
-import Progress from 'component/Progress';
-import Spinner from 'component/Spinner';
-import Toggle from 'component/Toggle';
+import theme from 'source/util/theme';
+import Button from 'source/component/Button';
+import Card from 'source/component/Card';
+import {CenterContent, AlignContent} from 'source/component/ContentAligners';
+import Checkbox from 'source/component/Checkbox';
+import CustomEvents from "source/component/CustomEvents";
+import Grid from 'source/component/Grid';
+import {Icon, IconButton} from 'source/component/Icon';
+import Image from 'source/component/Image';
+import Pinboard from 'source/component/Pinboard';
+import Progress from 'source/component/Progress';
+import Spinner from 'source/component/Spinner';
+import Toggle from 'source/component/Toggle';
 
-import {CSS} from 'util/stylesheet';
-import componentStyleSheet from 'util/app';
+import {CSS} from 'source/util/stylesheet';
+import componentStyleSheet from 'source/util/app';
 
 window.Doric = {
     Button,
@@ -237,7 +237,7 @@ class TextInput extends React.Component {
         const labelProps = {
             placeholder: (value === "" || value === null) ? "" : null
         };
-        const poc = this.props.onChange || () => {};
+        const poc = this.props.onChange || (() => {});
         const onChange = evt => poc(evt.target.value, evt);
 
         return (
@@ -319,7 +319,7 @@ class RangeInput extends React.Component {
         const [touch] = evt.changedTouches;
         const track = this.refs.track.getBoundingClientRect();
         const thumb = this.refs.thumb.getBoundingClientRect();
-        console.log(thumb);
+        // console.log(thumb);
         this.range = track.width;
         this.startPos = track.left;
         this.startValue = thumb.left - track.left;
@@ -425,7 +425,12 @@ class Main extends React.Component {
             <div style={{width: '100%', height: '100%'}}>
                 <div style={{width: '100%', height: '100%', overflow: 'auto'}}>
                     <Doric.Card title="Testing">
-                        <RangeInput value={this.state.r} onChange={r => this.setState({r})} color={CSS.rgb(this.state.r, 0, 0)} min={0} max={255} />
+                        <RangeInput
+                            value={this.state.r}
+                            onChange={r => this.setState({r})}
+                            color={CSS.rgb(this.state.r, 0, 0)}
+                            min={0}
+                            max={255} />
                         <RangeInput value={this.state.g} onChange={g => this.setState({g})} color={CSS.rgb(0, this.state.g, 0)} min={0} max={255} />
                         <RangeInput value={this.state.b} onChange={b => this.setState({b})} color={CSS.rgb(0, 0, this.state.b)} min={0} max={255} />
                         <div style={{height: 35, backgroundColor: CSS.rgb(this.state.r, this.state.g, this.state.b)}} />

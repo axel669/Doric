@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStyleSheet, genCSS} from 'util/stylesheet';
 
-import RobotoFont from 'data-uri/roboto-light.woff.source';
-import IonicFont from 'data-uri/ionicons.woff.source';
+import {createStyleSheet, genCSS} from 'source/util/stylesheet';
+
+import RobotoFont from 'source/data-uri/roboto-light.woff.source';
+import IonicFont from 'source/data-uri/ionicons.woff.source';
 
 const head = document.querySelector("head");
 const roboto = document.createElement("style");

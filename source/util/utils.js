@@ -1,6 +1,6 @@
 const warningFunc = errorMessage =>
     () => console.warn(errorMessage);
 
-export default {
+export {
     warningFunc
 };

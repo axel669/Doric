@@ -1,5 +1,6 @@
 import React from 'react';
-import componentStyleSheet from 'util/app';
+
+import componentStyleSheet from 'source/util/app';
 
 componentStyleSheet.addStyles({
     "doric-pinboard": {

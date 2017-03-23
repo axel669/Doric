@@ -1,7 +1,7 @@
 import React from 'react';
 
-import componentStyleSheet from 'util/app';
-import icons from 'util/icons';
+import componentStyleSheet from 'source/util/app';
+import icons from 'source/util/icons';
 
 componentStyleSheet.addStyles({
     "doric-icon": {
@@ -13,4 +13,4 @@ componentStyleSheet.addStyles({
 const Icon = ({icon, className, ...passThrough}) => <doric-icon {...passThrough} class={className}>{icons[icon]}</doric-icon>;
 const IconButton = ({icon, text = "", children, ...props}) => <Button {...props} text={<Icon icon={icon} />}>{text}{children}</Button>;
 
-export default {Icon, IconButton};
+export {Icon, IconButton};
