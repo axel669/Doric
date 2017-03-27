@@ -9,9 +9,11 @@
     </head>
     <body>
         <div id="app-container"></div>
+        <script src="doric.js"></script>
         <script src="app.js"></script>
         <script>
         (function() {
+            console.log('woah', Date.now());
             var custom = document.createEvent("CustomEvent");
             custom.initEvent("deviceready", null, null, true);
             document.dispatchEvent(custom);

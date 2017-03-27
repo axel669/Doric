@@ -1,4 +1,7 @@
-main: source/main.js
+# main: source/main.js
+# output: doric.js
+# minify: true
+main: demo-code/demo.js
 output: app.js
-longErrors: true
 debug: true
+# longErrors: true
