@@ -85,7 +85,7 @@ class Main extends React.Component {
     }
 
     render = () => {
-        console.log('wat', Date.now());
+        // console.log('wat', Date.now());
         return (
             <div style={{width: '100%', height: '100%'}}>
                 <div style={{width: '100%', height: '100%', overflow: 'auto'}}>
@@ -93,6 +93,9 @@ class Main extends React.Component {
                         <Doric.Image source={wideIMGurl} width="100%" height={150} />
                         <Doric.Input.Text value={this.state.text} onChange={text => this.setState({text})} label="Woah" />
                         <Doric.Slider value={this.state.num} onChange={num => this.setState({num})} min={0} max={100} />
+                    </Doric.Card>
+                    <Doric.Card>
+                        <Doric.Input.Multiline value={this.state.text2} onChange={text2 => this.setState({text2})} />
                     </Doric.Card>
                 </div>
             </div>

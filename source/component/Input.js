@@ -89,13 +89,71 @@ class TextInput extends React.Component {
     }
 }
 
+componentStyleSheet.addStyles({
+    "doric-input-multiline": {
+        display: 'inline-block',
+        position: 'relative',
+        top: 0,
+        left: 0,
+        display: 'block',
+        margin: 3,
+        paddingTop: 22,
+        backgroundColor: 'white'
+    },
+    "doric-input-multiline > textarea": {
+        width: '100%',
+        borderWidth: 0,
+        padding: 5,
+        margin: 0,
+        borderBottom: `2px solid ${consts.theme.grayBG}`,
+        backgroundColor: 'transparent',
+        position: 'relative',
+        top: 0,
+        left: 0,
+        zIndex: "+1"
+    },
+    "doric-input-multiline > textarea:focus": {
+        outline: 'none'
+    },
+
+    "doric-input-multiline > textarea + doric-input-multiline-flourish": {
+        position: 'absolute',
+        height: 2,
+        backgroundColor: consts.theme.bluish,
+        left: 0,
+        right: 0,
+        bottom: 4,
+        transform: 'scaleX(0)',
+        zIndex: "+2"
+    },
+    "doric-input-multiline > textarea:focus + doric-input-multiline-flourish": {
+        transition: 'transform 100ms linear',
+        transform: 'scaleX(1)'
+    }
+});
+const MultilineInput = (props) => {
+    const {
+        value
+    } = props;
+    const poc = props.onChange || (() => {});
+    const onChange = evt => poc(evt.target.value);
+
+    return (
+        <CustomEvents component="doric-input-multiline">
+            <textarea value={value} onChange={onChange} />
+            <doric-input-multiline-flourish />
+        </CustomEvents>
+    );
+};
+
 const Input = {
     Text: props => <TextInput {...props} type="text" />,
     Password: props => <TextInput {...props} type="password" />,
     Search: props => <TextInput {...props} type="search" />,
     URL: props => <TextInput {...props} type="url" />,
     Email: props => <TextInput {...props} type="email" />,
-    Number: props => <TextInput {...props} type="number" />
+    Number: props => <TextInput {...props} type="number" />,
+    Multiline: MultilineInput
 };
 
 export default Input;

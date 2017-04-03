@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import icons from 'source/util/icons';
 import {warningFunc} from 'source/util/utils';
 import consts from 'source/util/consts';
+import Env from 'source/util/env';
 
 import "source/util/chrono";
 import "source/util/gesture";
@@ -49,7 +50,8 @@ window.Doric = {
 window.React = React;
 window.DoricUtil = {
     CSS,
-    warningFunc
+    warningFunc,
+    Env
 };
 
 Math.rand = (a, b = null) => {

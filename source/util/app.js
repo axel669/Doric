@@ -6,6 +6,8 @@ import {createStyleSheet, genCSS} from 'source/util/stylesheet';
 import RobotoFont from 'source/data-uri/roboto-light.woff.source';
 import IonicFont from 'source/data-uri/ionicons.woff.source';
 
+import "source/util/deviceready";
+
 const head = document.querySelector("head");
 const roboto = document.createElement("style");
 const appStyle = document.createElement("style");
