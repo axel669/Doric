@@ -102,7 +102,8 @@ componentStyleSheet.addStyles({
     },
     "doric-input-multiline > textarea": {
         width: '100%',
-        borderWidth: 0,
+        borderWidth: 1,
+        borderColor: 'lightgray',
         padding: 5,
         margin: 0,
         borderBottom: `2px solid ${consts.theme.grayBG}`,
@@ -110,7 +111,8 @@ componentStyleSheet.addStyles({
         position: 'relative',
         top: 0,
         left: 0,
-        zIndex: "+1"
+        zIndex: "+1",
+        resize: 'none'
     },
     "doric-input-multiline > textarea:focus": {
         outline: 'none'
@@ -133,14 +135,15 @@ componentStyleSheet.addStyles({
 });
 const MultilineInput = (props) => {
     const {
-        value
+        value,
+        lines = 3
     } = props;
     const poc = props.onChange || (() => {});
     const onChange = evt => poc(evt.target.value);
 
     return (
         <CustomEvents component="doric-input-multiline">
-            <textarea value={value} onChange={onChange} />
+            <textarea value={value} onChange={onChange} rows={lines} />
             <doric-input-multiline-flourish />
         </CustomEvents>
     );
