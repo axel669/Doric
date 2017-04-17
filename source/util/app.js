@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Router, Route, hashHistory} from 'react-router';
 
 import {createStyleSheet, genCSS} from 'source/util/stylesheet';
 
@@ -15,6 +16,8 @@ const fonts = new Set();
 
 const componentStyleSheet = createStyleSheet();
 let initCalled = false;
+let routes = <Route path="/" component={() => <div>Ready!</div>} />;
+let routerComponent;
 
 roboto.setAttribute("data-name", "doric-core-style");
 head.appendChild(roboto);
@@ -22,17 +25,36 @@ head.appendChild(roboto);
 appStyle.setAttribute("data-name", "doric-app-style");
 head.appendChild(appStyle);
 
+const initialize = async () => {
+    if (initCalled === true) {
+        return;
+    }
+
+    initCalled = true;
+    await deviceReady;
+
+    const wrapper = (
+        <Router history={hashHistory}>
+            <Route getChildRoutes={(location, load) => load(null, routes)} />
+        </Router>
+    );
+    document.body.innerHTML = `<div id="app-container" style="postion: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overfow: hidden"></div>`;
+    componentStyleSheet.__init(roboto);
+    routerComponent = ReactDOM.render(
+        wrapper,
+        document.querySelector("#app-container")
+    );
+};
+const navReplace = url => routerComponent.router.replace(url);
+const navPush = url => routerComponent.router.push(url);
+const navPop = () => routerComponent.router.pop();
+
+window.Route = Route;
 window.App = {
-    async render(content) {
-        const wrapper = (
-            <div style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', overflow: 'hidden'}}>{content}</div>
-        );
-        if (initCalled === false) {
-            await deviceReady;
-            componentStyleSheet.__init(roboto);
-            initCalled = true;
-        }
-        ReactDOM.render(wrapper, document.body);
+    async start(appRoutes) {
+        await initialize();
+        routes = appRoutes;
+        navReplace("/");
         App.styleSheet.__init(appStyle);
         App.styleSheet = createStyleSheet();
     },
@@ -48,7 +70,12 @@ window.App = {
 
         head.appendChild(elem);
     },
-    styleSheet: createStyleSheet()
+    styleSheet: createStyleSheet(),
+    nav: {
+        push: navPush,
+        pop: navPop,
+        replace: navReplace
+    }
 };
 
 componentStyleSheet.addStyles({
