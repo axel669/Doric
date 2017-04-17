@@ -24,6 +24,7 @@ import Pinboard from 'source/component/Pinboard';
 import Progress from 'source/component/Progress';
 import Slider from 'source/component/Slider';
 import Spinner from 'source/component/Spinner';
+import Tabs from 'source/component/Tabs';
 import Toggle from 'source/component/Toggle';
 
 import {CSS} from 'source/util/stylesheet';
@@ -45,6 +46,7 @@ window.Doric = {
     Progress,
     Slider,
     Spinner,
+    Tabs,
     Toggle
 };
 window.React = React;

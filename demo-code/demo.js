@@ -67,199 +67,6 @@ const superNest = depth => {
 // const wideIMGurl = "http://a3.mzstatic.com/jp/r30/Purple/v4/d7/12/51/d71251a5-1f50-f6bc-d56a-8740ea2532fb/screen1136x1136.jpeg";
 const wideIMGurl = "https://upload.wikimedia.org/wikipedia/en/b/b8/Bayonetta-character.png";
 
-const lineColor = 'gray';
-App.styleSheet.addStyles({
-    "doric-tabs": {
-        position: 'relative',
-        top: 0,
-        left: 0,
-        display: 'block'
-    },
-    "doric-tabs-bar": {
-        height: 35,
-        display: 'block',
-        position: 'absolute',
-        top: 0,
-        width: '100%'
-    },
-    "doric-tabs-tab": {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-        border: '1px solid transparent',
-        borderBottom: `1px solid ${lineColor}`,
-        position: 'absolute',
-        opacity: 0.7,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3
-    },
-    "doric-tabs-tab[selected]": {
-        border: `1px solid ${lineColor}`,
-        borderBottom: '1px solid transparent',
-        opacity: 1
-    },
-    "doric-tabs-content": {
-        display: 'block',
-        position: 'absolute',
-        top: 35,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        overflow: 'auto'
-    }
-});
-
-// class Tabs extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this.scrolls = {};
-//     }
-//
-//     componentWillUpdate = () => {
-//         console.log(this.props);
-//     }
-//     componentDidUpdate = () => {
-//         const {
-//             selectedIndex = 0,
-//             unmountOnChange = false
-//         } = this.props;
-//
-//         if (unmountOnChange === false) {
-//             this.refs.content.scrollTop = this.scrolls[selectedIndex];
-//         }
-//     }
-//
-//     render = () => {
-//         const {
-//             selectedIndex = 0,
-//             height = 100,
-//             unmountOnChange = false
-//         } = this.props;
-//         const children = React.Children.toArray(this.props.children);
-//         const onChange = this.props.onChange || (() => {});
-//         const size = 100 / children.length;
-//
-//         const tabs = children.map(
-//             (tab, index) => {
-//                 const props = {
-//                     selected: (index === selectedIndex) || null,
-//                     style: {
-//                         width: `${size}%`,
-//                         left: `${size * index}%`
-//                     },
-//                     onTap (evt) {
-//                         onChange(index);
-//                     }
-//                 };
-//                 const tabTitle = tab.props["tab-title"];
-//                 const tabIcon = tab.props['tab-icon'] || null;
-//                 const tabImage = tab.props['tab-image'] || null;
-//
-//                 if (this.scrolls[index] === undefined) {
-//                     this.scrolls[index] = 0;
-//                 }
-//
-//                 let tabContent = null;
-//                 if (tabImage !== null) {
-//                     tabContent = <Doric.Image source={tabImage} width="100%" height="100%" />;
-//                 } else {
-//                     tabContent = [<div>{tabTitle}</div>];
-//                     if (tabIcon !== null) {
-//                         tabContent.unshift(<div style={{padding: 3}}><Doric.Icon icon={tabIcon} /></div>);
-//                     }
-//                 }
-//
-//                 return <Doric.CustomEvents component="doric-tabs-tab" {...props}>{tabContent}</Doric.CustomEvents>;
-//             }
-//         );
-//
-//         let displayChidren = null;
-//         if (unmountOnChange === false) {
-//             displayChidren = children.map(
-//                 (child, index) => {
-//                     const display = (index === selectedIndex) ? null : 'none';
-//                     return <div style={{display}}>{child}</div>;
-//                 }
-//             );
-//         } else {
-//             displayChidren = <div>{children[selectedIndex]}</div>;
-//         }
-//
-//         return (
-//             <doric-tabs style={{height}}>
-//                 <doric-tabs-bar>{tabs}</doric-tabs-bar>
-//                 <doric-tabs-content ref="content">
-//                     {displayChidren}
-//                 </doric-tabs-content>
-//             </doric-tabs>
-//         );
-//     }
-// }
-
-const Tabs = props => {
-    const {
-        keepAlive = false,
-        selectedIndex = 0,
-        height = 100,
-        unmountOnChange = false
-    } = props;
-    const children = React.Children.toArray(props.children);
-    const onChange = props.onChange || (() => {});
-    const size = 100 / children.length;
-
-    const tabs = children.map(
-        (tab, index) => {
-            const props = {
-                selected: (index === selectedIndex) || null,
-                style: {
-                    width: `${size}%`,
-                    left: `${size * index}%`
-                },
-                onTap (evt) {
-                    onChange(index);
-                }
-            };
-            const tabTitle = tab.props["tab-title"];
-            const tabIcon = tab.props['tab-icon'] || null;
-            const tabImage = tab.props['tab-image'] || null;
-
-            let tabContent = null;
-            if (tabImage !== null) {
-                tabContent = <Doric.Image source={tabImage} width="100%" height="100%" />;
-            } else {
-                tabContent = [<div>{tabTitle}</div>];
-                if (tabIcon !== null) {
-                    tabContent.unshift(<div style={{padding: 3}}><Doric.Icon icon={tabIcon} /></div>);
-                }
-            }
-
-            return <Doric.CustomEvents component="doric-tabs-tab" {...props}>{tabContent}</Doric.CustomEvents>;
-        }
-    );
-
-    let displayChidren = null;
-    if (unmountOnChange === false) {
-        displayChidren = children.map(
-            (child, index) => {
-                const display = (index === selectedIndex) ? null : 'none';
-                return <div style={{display}} key={index}>{child}</div>;
-            }
-        );
-    } else {
-        displayChidren = <div>{children[selectedIndex]}</div>;
-    }
-
-    return (
-        <doric-tabs style={{height}}>
-            <doric-tabs-bar>{tabs}</doric-tabs-bar>
-            <doric-tabs-content>
-                {displayChidren}
-            </doric-tabs-content>
-        </doric-tabs>
-    );
-};
-
 class TestLifecycle extends React.Component {
     constructor(props) {
         super(props);
@@ -305,17 +112,18 @@ class Main extends React.Component {
                         <Doric.Input.Text value={this.state.text} onChange={text => this.setState({text})} label="Woah" />
                         <Doric.Slider value={this.state.num} onChange={num => this.setState({num})} min={0} max={100} />
                     </Doric.Card>
+                    <Doric.Button text="Navigate?" raised onTap={() => App.nav.push('/test')} />
                     {/* <Doric.Card>
                         <Doric.Input.Multiline value={this.state.text2} onChange={text2 => this.setState({text2})} />
                     </Doric.Card> */}
-                    <Tabs onChange={tab => this.setState({tab})} selectedIndex={this.state.tab} height={250}>
-                        <TestLifecycle tab-image={wideIMGurl}>
+                    <Doric.Tabs onChange={tab => this.setState({tab})} selectedIndex={this.state.tab} height={250}>
+                        <TestLifecycle tabImage={wideIMGurl}>
                             {range.array(20, i => <div>{i}</div>)}
                         </TestLifecycle>
-                        <TestLifecycle tab-title="B" tab-icon="ion-ionic">2</TestLifecycle>
-                        <TestLifecycle tab-title="C">3</TestLifecycle>
-                        <TestLifecycle tab-icon="ion-checkmark-circled">4</TestLifecycle>
-                    </Tabs>
+                        <TestLifecycle tabTitle="B" tabIcon="ion-ionic">2</TestLifecycle>
+                        <TestLifecycle tabTitle="C">3</TestLifecycle>
+                        <TestLifecycle tabIcon="ion-checkmark-circled">4</TestLifecycle>
+                    </Doric.Tabs>
                 </div>
             </div>
         );
@@ -338,6 +146,9 @@ App.styleSheet.addStyles({
 
 let actions = [<Doric.Button text="First" />, <Doric.Button text="Second" />];
 
-App.render(
-    <Main />
+App.start(
+    <Route>
+        <Route path="/" component={Main} />
+        <Route path="/test" component={() => <div>LOL</div>} />
+    </Route>
 );
