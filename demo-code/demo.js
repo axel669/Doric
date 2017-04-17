@@ -131,6 +131,54 @@ class Main extends React.Component {
 }
 
 App.styleSheet.addStyles({
+    "doric-screen": {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%'
+    },
+    "doric-screen-title": {
+        display: 'block'
+    },
+    "doric-screen-content": {
+        position: 'absolute',
+        top: 60,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: 'auto'
+    }
+});
+class Screen extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render = () => {
+        const {
+            title
+        } = this.props;
+        return (
+            <doric-screen>
+                <doric-screen-title>{title}</doric-screen-title>
+                <doric-screen-content>
+                    {this.props.children}
+                </doric-screen-content>
+            </doric-screen>
+        );
+    }
+}
+
+const Test = () => {
+    return (
+        <Screen title="test">
+            <Doric.Button text="Testing" raised />
+        </Screen>
+    );
+};
+
+App.styleSheet.addStyles({
     "doric-button.fancy": {
         display: ['-webkit-flex', 'flex']
     },
@@ -148,7 +196,7 @@ let actions = [<Doric.Button text="First" />, <Doric.Button text="Second" />];
 
 App.start(
     <Route>
-        <Route path="/" component={Main} />
+        <Route path="/" component={Test} />
         <Route path="/test" component={() => <div>LOL</div>} />
     </Route>
 );
