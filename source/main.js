@@ -22,6 +22,7 @@ import Image from 'source/component/Image';
 import Input from 'source/component/Input';
 import Pinboard from 'source/component/Pinboard';
 import Progress from 'source/component/Progress';
+import Screen from 'source/component/Screen';
 import Slider from 'source/component/Slider';
 import Spinner from 'source/component/Spinner';
 import Tabs from 'source/component/Tabs';
@@ -44,12 +45,14 @@ window.Doric = {
     Input,
     Pinboard,
     Progress,
+    Screen,
     Slider,
     Spinner,
     Tabs,
     Toggle
 };
 window.React = React;
+window.ReactDOM = ReactDOM;
 window.DoricUtil = {
     CSS,
     warningFunc,

@@ -130,51 +130,63 @@ class Main extends React.Component {
     }
 }
 
-App.styleSheet.addStyles({
-    "doric-screen": {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%'
-    },
-    "doric-screen-title": {
-        display: 'block'
-    },
-    "doric-screen-content": {
-        position: 'absolute',
-        top: 60,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        overflow: 'auto'
-    }
-});
-class Screen extends React.Component {
+const arrayFind = Array.prototype.find;
+class Movable extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            x: 0,
+            y: 0
+        };
+    }
+
+    setup = (evt) => {
+        const [touch] = evt.changedTouches;
+        const id = touch.identifier;
+        const {x, y} = this.state;
+        const startingPoint = {
+            x: touch.clientX,
+            y: touch.clientY
+        };
+        this.update = (evt) => {
+            const touch = evt.changedTouches::arrayFind(touch => touch.identifier === id);
+            if (touch === undefined) {
+                return;
+            }
+
+            const dx = touch.clientX - startingPoint.x;
+            const dy = touch.clientY - startingPoint.y;
+            this.setState({
+                x: x + dx,
+                y: y + dy
+            });
+        };
+        (this.props.onDragStart || (() => {}))(this);
+    }
+    move = (evt) => {
+        this.update(evt);
+        (this.props.onDrag || (() => {}))(this);
+        // cblog(evt);
+    }
+    stop = () => {
+        (this.props.onDragEnd || (() => {}))(this);
     }
 
     render = () => {
-        const {
-            title
-        } = this.props;
-        return (
-            <doric-screen>
-                <doric-screen-title>{title}</doric-screen-title>
-                <doric-screen-content>
-                    {this.props.children}
-                </doric-screen-content>
-            </doric-screen>
-        );
+        const {x, y} = this.state;
+        const transform = `translate(${x}px, ${y}px)`;
+        return <div style={{transform, display: 'inline-block'}} onTouchMove={this.move} onTouchStart={this.setup} onTouchEnd={this.stop}>{this.props.children}</div>;
     }
 }
 
 const Test = () => {
     return (
-        <Screen title="test">
-            <Doric.Button text="Testing" raised />
-        </Screen>
+        <Doric.Screen title="Screen Test">
+            <div onTouchMove={evt => evt.target.style.transform = `translate(${evt.changedTouches[0].clientX}px, ${evt.changedTouches[0].clientY}px)`} style={{width: 100, height: 100, backgroundColor: 'cyan'}} />
+            <Movable onDrag={component => }>
+                <div style={{width: 100, height: 100, backgroundColor: 'cyan'}} />
+            </Movable>
+        </Doric.Screen>
     );
 };
 
