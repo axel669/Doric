@@ -6,9 +6,15 @@ import {warningFunc} from 'source/util/utils';
 import consts from 'source/util/consts';
 import Env from 'source/util/env';
 
+import ajax from 'source/util/ajax';
+import chrono from 'source/util/chrono';
+import fs from 'source/util/filesys';
+import secure from 'source/util/crypto';
+
 import "source/util/chrono";
 import "source/util/gesture";
 import "source/util/deviceready";
+import "source/util/settings";
 
 import theme from 'source/util/theme';
 import Button from 'source/component/Button';
@@ -58,6 +64,11 @@ window.DoricUtil = {
     warningFunc,
     Env
 };
+
+window.ajax = ajax;
+window.chrono = chrono;
+window.fs = fs;
+window.secure = secure;
 
 Math.rand = (a, b = null) => {
     if (b === null) {
