@@ -22,7 +22,8 @@ componentStyleSheet.addStyles({
         justifyContent: 'center',
         alignItems: 'center',
         boxShadow: '0 2px 2px 0 rgba(0, 0, 0, 0.25)',
-        fontSize: 20
+        fontSize: 20,
+        zIndex: '+5'
     },
     "doric-screen-content": {
         position: 'absolute',

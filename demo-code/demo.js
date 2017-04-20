@@ -179,12 +179,22 @@ class Movable extends React.Component {
     }
 }
 
+App.styleSheet.addStyles({
+    ".test": {
+        backgroundColor: CSS.rgba(Math.rand(255), Math.rand(255), Math.rand(255), 1)
+    },
+    ".test2": {
+        backgroundColor: CSS.rgba(Math.rand(255), Math.rand(255), Math.rand(255), 1)
+    }
+});
 const Test = () => {
     return (
         <Doric.Screen title="Screen Test">
-            <div onTouchMove={evt => evt.target.style.transform = `translate(${evt.changedTouches[0].clientX}px, ${evt.changedTouches[0].clientY}px)`} style={{width: 100, height: 100, backgroundColor: 'cyan'}} />
-            <Movable onDrag={component => }>
-                <div style={{width: 100, height: 100, backgroundColor: 'cyan'}} />
+            <Movable>
+                <div style={{width: 100, height: 100}} className="test" />
+            </Movable>
+            <Movable>
+                <div style={{width: 100, height: 100}} className="test2" />
             </Movable>
         </Doric.Screen>
     );
