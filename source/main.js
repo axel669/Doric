@@ -9,7 +9,7 @@ import Env from 'source/util/env';
 import ajax from 'source/util/ajax';
 import chrono from 'source/util/chrono';
 import fs from 'source/util/filesys';
-import secure from 'source/util/crypto';
+// import secure from 'source/util/crypto';
 
 import "source/util/chrono";
 import "source/util/gesture";
@@ -68,7 +68,7 @@ window.DoricUtil = {
 window.ajax = ajax;
 window.chrono = chrono;
 window.fs = fs;
-window.secure = secure;
+// window.secure = secure;
 
 Math.rand = (a, b = null) => {
     if (b === null) {
