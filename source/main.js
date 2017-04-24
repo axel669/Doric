@@ -15,6 +15,7 @@ import "source/util/chrono";
 import "source/util/gesture";
 import "source/util/deviceready";
 import "source/util/settings";
+import "source/util/api";
 
 import theme from 'source/util/theme';
 import Button from 'source/component/Button';

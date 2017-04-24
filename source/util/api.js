@@ -9,5 +9,5 @@ App.API = baseURL => ({
         }
         return JSON.parse(result.response);
     },
-    getURL = url => `${baseURL}${url}`
+    getURL: url => `${baseURL}${url}`
 });
