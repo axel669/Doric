@@ -38,7 +38,7 @@ const initialize = async () => {
             <Route getChildRoutes={(location, load) => load(null, routes)} />
         </Router>
     );
-    document.body.innerHTML = `<div id="app-container" style="postion: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overfow: hidden"></div>`;
+    document.body.innerHTML = `<div id="app-container" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; overflow: hidden"></div>`;
     componentStyleSheet.__init(roboto);
     routerComponent = ReactDOM.render(
         wrapper,
