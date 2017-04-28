@@ -14,7 +14,8 @@ componentStyleSheet.addStyles({
         display: 'block',
         margin: 3,
         paddingTop: 22,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        verticalAlign: 'top'
     },
     "doric-input > input": {
         width: '100%',

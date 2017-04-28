@@ -17,8 +17,7 @@ componentStyleSheet.addStyles({
         borderRadius: 3,
         borderWidth: 0,
         overflow: 'hidden',
-        // marginLeft: 5,
-        // marginRight: 5
+        verticalAlign: 'top',
         margin: 5
     },
     "doric-button:after": {

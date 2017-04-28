@@ -6,7 +6,8 @@ componentStyleSheet.addStyles({
     "doric-image": {
         display: 'inline-block',
         backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center center'
+        backgroundPosition: 'center center',
+        verticalAlign: 'top'
     }
 });
 const Image = ({source, cover = false, contain = false, width = null, height = null, style = {}, ...passThrough}) => {
