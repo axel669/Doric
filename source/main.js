@@ -18,6 +18,7 @@ import "source/util/settings";
 import "source/util/api";
 
 import theme from 'source/util/theme';
+import BackgroundImage from 'source/component/BackgroundImage';
 import Button from 'source/component/Button';
 import Card from 'source/component/Card';
 import {CenterContent, AlignContent} from 'source/component/ContentAligners';
@@ -39,6 +40,7 @@ import {CSS} from 'source/util/stylesheet';
 import componentStyleSheet from 'source/util/app';
 
 window.Doric = {
+    BackgroundImage,
     Button,
     Card,
     CenterContent,
