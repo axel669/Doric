@@ -3,7 +3,6 @@ import Image from 'source/component/Image';
 
 import componentStyleSheet from 'source/util/app';
 
-const lineColor = 'gray';
 componentStyleSheet.addStyles({
     "doric-tabs": {
         position: 'relative',
@@ -16,24 +15,32 @@ componentStyleSheet.addStyles({
         display: 'block',
         position: 'absolute',
         top: 0,
-        width: '100%'
+        width: '100%',
+        backgroundColor: '#4285f4'
     },
     "doric-tabs-tab": {
+        position: 'relative',
+        top: 0,
+        left: 0,
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         height: '100%',
-        border: '1px solid transparent',
-        borderBottom: `1px solid ${lineColor}`,
         position: 'absolute',
-        opacity: 0.7,
-        borderTopLeftRadius: 3,
-        borderTopRightRadius: 3
+        opacity: 0.6,
+        color: 'white'
     },
     "doric-tabs-tab[selected]": {
-        border: `1px solid ${lineColor}`,
-        borderBottom: '1px solid transparent',
         opacity: 1
+    },
+    "doric-tabs-tab[selected]::after": {
+        content: `""`,
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: 3,
+        backgroundColor: '#ffae22'
     },
     "doric-tabs-content": {
         display: 'block',
@@ -88,7 +95,7 @@ const Tabs = props => {
                 }
             }
 
-            return <CustomEvents component="doric-tabs-tab" {...props}>{tabContent}</CustomEvents>;
+            return <Doric.CustomEvents component="doric-tabs-tab" {...props}>{tabContent}</Doric.CustomEvents>;
         }
     );
 
