@@ -128,7 +128,7 @@ class Screen extends React.Component {
                     {menuButton}
                 </doric-screen-title>
                 <doric-screen-menu visible={expanded}>
-                    <div style={{backgroundColor: '#4285f4'}}>
+                    <div style={{backgroundColor: '#4285f4', position: 'absolute', width: '100%'}}>
                         {menu}
                     </div>
                 </doric-screen-menu>

@@ -47,7 +47,7 @@ const initialize = async () => {
 };
 const navReplace = url => routerComponent.router.replace(url);
 const navPush = url => routerComponent.router.push(url);
-const navPop = () => routerComponent.router.pop();
+const navPop = () => routerComponent.router.goBack();
 
 window.Route = Route;
 window.App = {

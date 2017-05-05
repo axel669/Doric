@@ -37,9 +37,9 @@ class Test extends React.Component {
     })
 
     render = () => {
-        const topMenu = [
-            <Doric.Button style={{display: 'flex'}} text="Test" onTap={() => this.refs.screen.setState({expanded: false})} />
-        ];
+        const topMenu = <div>
+            <Doric.Button style={{display: 'flex'}} text="Test" onTap={() => App.nav.push("/test")} />
+        </div>;
 
         return (
             <Doric.Screen title="Screen Test" menu={topMenu} backText="Test" onBack={() => cblog(1)} ref="screen">
@@ -56,6 +56,6 @@ let actions = [<Doric.Button text="First" />, <Doric.Button text="Second" />];
 App.start(
     <Route>
         <Route path="/" component={Test} />
-        <Route path="/test" component={() => <div>LOL</div>} />
+        <Route path="/test" component={() => <Doric.Screen title="LOL" backText="Back" />} />
     </Route>
 );
