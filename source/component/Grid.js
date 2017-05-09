@@ -24,12 +24,11 @@ componentStyleSheet.addStyles({
 
 const Grid = props => {
     const {
-        // cellSpacingH = 0,
-        // cellSpacingV = 0,
         cellSpacing = [0, 0],
         cellHeight = 30,
         colCount = 12,
-        style = {}
+        style = {},
+        className
     } = props;
     const [cellSpacingH, cellSpacingV] = (typeof cellSpacing === 'number') ? [cellSpacing, cellSpacing] : cellSpacing;
     const gridStyle = {
@@ -58,7 +57,7 @@ const Grid = props => {
     );
 
     return (
-        <doric-grid style={gridStyle}>
+        <doric-grid style={gridStyle} class={className}>
             {children}
         </doric-grid>
     );
