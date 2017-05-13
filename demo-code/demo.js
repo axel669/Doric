@@ -159,14 +159,14 @@ class PointBuyScreen extends React.Component {
 
         return (
             <Doric.Screen title="D&D Point Buy">
-                <div style={{padding: 3}}>
-                    Points Remaining: {points}
-                </div>
-                <Doric.BackgroundImage source={""}>
+                <div style={{margin: 'auto', width: 320}}>
+                    <div style={{padding: 3}}>
+                        Points Remaining: {points}
+                    </div>
                     {Object.entries(stats).map(
                         ([name, {base, race}]) => <StatDisplay {...{name, base, race, points}} onChange={this.updateStat} />
                     )}
-                </Doric.BackgroundImage>
+                </div>
             </Doric.Screen>
         );
     }
