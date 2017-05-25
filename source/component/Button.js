@@ -29,13 +29,15 @@ componentStyleSheet.addStyles({
         right: 0,
         transition: 'background-color 250ms linear'
     },
-    "doric-button[pressed]:after": {
+    "doric-button[pressed]:not([disabled]):after": {
         backgroundColor: 'rgba(0, 0, 0, 0.25)',
         transition: 'none'
     },
 
     "doric-button[disabled]": {
-        boxShadow: 'none'
+        boxShadow: 'none',
+        backgroundColor: '#e6e6e6',
+        color: '#808080'
     },
     "doric-button[raised]": {
         boxShadow: theme.general.boxShadow
@@ -48,6 +50,13 @@ const Button = props => {
         className = "",
         ...passThrough
     } = props;
+    const passedOnTap = passThrough.onTap || (() => {});
+
+    passThrough.onTap = evt => {
+        if (passThrough.disabled !== true) {
+            passedOnTap(evt);
+        }
+    };
 
     return <CustomEvents component="doric-button" {...passThrough} class={className}>{text}{children}</CustomEvents>;
 };

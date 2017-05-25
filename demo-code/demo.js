@@ -174,9 +174,80 @@ class PointBuyScreen extends React.Component {
 
 // let actions = [<Doric.Button text="First" />, <Doric.Button text="Second" />];
 
+// App.styleSheet.addStyles({
+//     "doric-calendar-day": {
+//         height: 30,
+//         display: ['-webkit-inline-flex', 'inline-flex'],
+//         alignItems: 'center',
+//         justifyContent: 'center'
+//     },
+//     "doric-calendar-day.grayed": {
+//         backgroundColor: 'lightgray'
+//     },
+//     "doric-calendar-day.grayed": {
+//         backgroundColor: 'lightgray'
+//     }
+// });
+class Calendar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            year: chrono().year,
+            month: chrono().month
+        };
+    }
+
+    render = () => {
+        const {selectedDate} = this.props;
+        const {month, year} = this.state;
+
+        const startDate = selectedDate
+            .startOf("month")
+            .startOf("week");
+        const dates = range.array(42)
+            .map(
+                i => {
+                    const day = startDate.shift(i, 'days');
+                    const type = (() => {
+                        switch (true) {
+                            case day.date === selectedDate.date
+                                && day.month === selectedDate.month
+                                && day.year === selectedDate.year:
+                                return 'selected';
+                            case day.month === month:
+                                return 'normal';
+                            default:
+                                return 'grayed';
+                        }
+                    })();
+                    return <div>{day.date}</div>;
+                    // return <Doric.Button text={
+                }
+            )
+
+        return <Doric.Grid colCount={7}>{dates}</Doric.Grid>;
+    }
+}
+
+class Main extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render = () => {
+        return (
+            <Doric.Screen title="Calendar Test">
+                <Calendar selectedDate={chrono()} />
+                <Doric.Button text="test" onTap={cblog} />
+                <Doric.Button text="test" onTap={cblog} disabled />
+            </Doric.Screen>
+        );
+    }
+}
+
 App.start(
     <Route>
-        <Route path="/" component={PointBuyScreen} />
+        <Route path="/" component={Main} />
         {/* <Route path="/test" component={() => <Doric.Screen title="LOL" backText="Back" />} /> */}
     </Route>
 );
