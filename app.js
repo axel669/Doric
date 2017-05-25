@@ -225,13 +225,13 @@ var PointBuyScreen = function (_React$Component2) {
                 { title: "D&D Point Buy" },
                 React.createElement(
                     "div",
-                    { style: { padding: 3 } },
-                    "Points Remaining: ",
-                    points
-                ),
-                React.createElement(
-                    Doric.BackgroundImage,
-                    { source: "" },
+                    { style: { margin: 'auto', width: 320 } },
+                    React.createElement(
+                        "div",
+                        { style: { padding: 3 } },
+                        "Points Remaining: ",
+                        points
+                    ),
                     (0, _entries2.default)(stats).map(function (_ref2) {
                         var _ref3 = (0, _slicedToArray3.default)(_ref2, 2),
                             name = _ref3[0],
