@@ -52,7 +52,7 @@ const Grid = props => {
             const width = `calc(${(colSpan * 100) / colCount}% + ${cellSpacingH}px)`;
             const marginLeft = -cellSpacingH;
             const marginTop = -cellSpacingV;
-            return <doric-grid-item style={{...baseItemStyle, width, marginTop, marginLeft}}><child.type {...childProps} /></doric-grid-item>;
+            return <doric-grid-item style={{...baseItemStyle, width, marginTop, marginLeft}}><child.type {...childProps} ref={child.ref} /></doric-grid-item>;
         }
     );
 

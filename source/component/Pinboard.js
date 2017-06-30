@@ -18,7 +18,7 @@ const Pinboard = ({style = {}, width = "100%", height = "100%", className = "", 
     children = children.map(
         (child, index) => {
             const {pinStyle, ...childProps} = child.props;
-            const actualChild = <child.type {...childProps} />;
+            const actualChild = <child.type {...childProps} ref={child.ref} />;
             return <doric-pin key={index} style={pinStyle}>{actualChild}</doric-pin>;
         }
     );

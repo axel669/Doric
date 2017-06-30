@@ -188,6 +188,14 @@ class PointBuyScreen extends React.Component {
 //         backgroundColor: 'lightgray'
 //     }
 // });
+App.styleSheet.addStyles({
+    "doric-button.calendar": {
+        width: '100%',
+        height: '100%',
+        margin: 0,
+        borderRadius: 0
+    }
+});
 class Calendar extends React.Component {
     constructor(props) {
         super(props);
@@ -198,48 +206,69 @@ class Calendar extends React.Component {
     }
 
     render = () => {
-        const {selectedDate} = this.props;
+        const {selectedDate, onChange = () => {}} = this.props;
         const {month, year} = this.state;
 
         const startDate = selectedDate
             .startOf("month")
             .startOf("week");
+        const dayMarkers = range.array(7)
+            .map(
+                i => {
+                    const text = startDate
+                        .shift(i, 'days')
+                        .format("{weekday/short}");
+
+                    return <Doric.CenterContent width="100%" height="100%">{text}</Doric.CenterContent>;
+                }
+            );
         const dates = range.array(42)
             .map(
                 i => {
                     const day = startDate.shift(i, 'days');
-                    const type = (() => {
-                        switch (true) {
-                            case day.date === selectedDate.date
-                                && day.month === selectedDate.month
-                                && day.year === selectedDate.year:
-                                return 'selected';
-                            case day.month === month:
-                                return 'normal';
-                            default:
-                                return 'grayed';
-                        }
-                    })();
-                    return <div>{day.date}</div>;
-                    // return <Doric.Button text={
+
+                    if (day.date === selectedDate.date
+                        && day.month === selectedDate.month
+                        && day.year === selectedDate.year) {
+
+                        return <Doric.Button className="calendar" style={{backgroundColor: "#4285f4", color: "white"}} text={day.date + 1} />;
+                    }
+                    if (day.month === month) {
+                        return <Doric.Button className="calendar" text={day.date + 1} onTap={() => onChange(day)} />;
+                    }
+
+                    return <Doric.Button className="calendar" disabled text={day.date + 1} />;
                 }
             )
 
-        return <Doric.Grid colCount={7}>{dates}</Doric.Grid>;
+        return (
+            <doric-calendar>
+                <Doric.Pinboard height={50}>
+                    <div pinInfo={{top: 0, left: 0}}>
+                        {month}/{year}
+                    </div>
+                </Doric.Pinboard>
+                <Doric.Grid colCount={7}>
+                    {dayMarkers}
+                    {dates}
+                </Doric.Grid>
+            </doric-calendar>
+        );
     }
 }
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            date: chrono()
+        };
     }
 
     render = () => {
         return (
             <Doric.Screen title="Calendar Test">
-                <Calendar selectedDate={chrono()} />
-                <Doric.Button text="test" onTap={cblog} />
-                <Doric.Button text="test" onTap={cblog} disabled />
+                <Calendar selectedDate={this.state.date} onChange={date => this.setState({date})} />
             </Doric.Screen>
         );
     }
