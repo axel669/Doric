@@ -35,7 +35,7 @@ componentStyleSheet.addStyles({
         position: 'absolute',
         top: 0,
         left: 0,
-        width: '100%',
+        paddingLeft: 2,
         height: 22,
         transformOrigin: 'left top',
         transform: 'translate(0, 3px) scale(0.85)',

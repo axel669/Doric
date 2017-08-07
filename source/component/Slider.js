@@ -9,10 +9,15 @@ const find = Array.prototype.find;
 componentStyleSheet.addStyles({
     "doric-slider": {
         display: 'block',
+        margin: 3
+    },
+    "doric-slider-content": {
+        display: 'block',
         position: 'relative',
         top: 0,
         left: 0,
-        height: 30
+        height: 30,
+        margin: 2
     },
     "doric-slider-track": {
         position: 'absolute',
@@ -35,7 +40,7 @@ componentStyleSheet.addStyles({
     "doric-slider-thumb": {
         position: 'absolute',
         top: 2,
-        width: '100%',
+        width: 0,
         height: 0,
         overflow: 'visible',
     },
@@ -119,7 +124,7 @@ class Slider extends React.Component {
     }
 
     render = () => {
-        const {min = 0, max = 10, value, color, displayFunc = i => i} = this.props;
+        const {min = 0, max = 10, value = min, color, displayFunc = i => i, label = null} = this.props;
         const pos = (value - min) / (max - min);
         const thumbStyle = {
             left: `${pos * 100}%`
@@ -128,6 +133,9 @@ class Slider extends React.Component {
             transform: `scaleX(${pos})`,
             backgroundColor: color
         };
+        const labelElem = label !== null
+            ? <div>{label}</div>
+            : null;
 
         const events = {
             onTouchStart: this.touchStart,
@@ -139,13 +147,16 @@ class Slider extends React.Component {
 
         return (
             <doric-slider>
-                <doric-slider-track ref="track">
-                    <doric-slider-track-fill style={fillStyle} />
-                    <doric-slider-thumb ref="thumb" style={thumbStyle} {...events}>
-                        {thumb}
-                        {valueDisplay}
-                    </doric-slider-thumb>
-                </doric-slider-track>
+                {labelElem}
+                <doric-slider-content>
+                    <doric-slider-track ref="track">
+                        <doric-slider-track-fill style={fillStyle} />
+                        <doric-slider-thumb ref="thumb" style={thumbStyle} {...events}>
+                            {thumb}
+                            {valueDisplay}
+                        </doric-slider-thumb>
+                    </doric-slider-track>
+                </doric-slider-content>
             </doric-slider>
         );
     }

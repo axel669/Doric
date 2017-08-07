@@ -14,11 +14,21 @@ componentStyleSheet.addStyles({
         borderWidth: 0,
         borderStyle: 'solid',
         borderColor: 'transparent',
-        overflow: 'hidden',
+        // overflow: 'hidden',
         position: 'relative',
         top: 0,
         left: 0,
         float: 'left'
+    },
+    "doric-radio-item": {
+        width: '100%',
+        height: '100%',
+        display: ['-webkit-flex', 'flex'],
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    "doric-radio-item[selected='true']": {
+        backgroundColor: 'cyan'
     }
 });
 
@@ -62,5 +72,11 @@ const Grid = props => {
         </doric-grid>
     );
 };
+
+Grid.RadioItem = ({children, selected, itemStyle = {}}) => (
+    <doric-radio-item selected={selected} style={itemStyle}>
+        {children}
+    </doric-radio-item>
+);
 
 export default Grid;

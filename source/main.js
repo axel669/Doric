@@ -14,6 +14,7 @@ import "source/util/gesture";
 import "source/util/deviceready";
 import "source/util/settings";
 import "source/util/api";
+import "source/component/Dialog";
 
 import theme from 'source/util/theme';
 import BackgroundImage from 'source/component/BackgroundImage';
@@ -22,6 +23,7 @@ import Card from 'source/component/Card';
 import {CenterContent, AlignContent} from 'source/component/ContentAligners';
 import Checkbox from 'source/component/Checkbox';
 import CustomEvents from "source/component/CustomEvents";
+import Form from 'source/component/Form';
 import Grid from 'source/component/Grid';
 import {Icon, IconButton} from 'source/component/Icon';
 import Image from 'source/component/Image';
@@ -45,6 +47,7 @@ window.Doric = {
     AlignContent,
     Checkbox,
     CustomEvents,
+    Form,
     Grid,
     Icon,
     IconButton,

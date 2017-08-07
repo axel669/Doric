@@ -90,5 +90,6 @@ const Toggle = props => {
         </CustomEvents>
     );
 };
+Toggle.formValue = "on";
 
 export default Toggle;

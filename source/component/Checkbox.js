@@ -71,5 +71,6 @@ const Checkbox = props => {
         </CustomEvents>
     );
 };
+Checkbox.formValue = "checked";
 
 export default Checkbox;
