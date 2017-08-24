@@ -266,46 +266,16 @@ class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            date: chrono()
+            date: chrono(),
+            text: null
         };
-    }
-
-    dialog = async (data) => {
-        class test extends React.Component {
-            constructor(props) {
-                super(props);
-            }
-
-            onFinish = (close) => {
-                close('hi');
-            }
-
-            render = () => {
-                const {close} = this.props;
-
-                return (
-                    <div>
-                        <Doric.Button text="Close?" raised onTap={close} />
-                        <Doric.Button text="Finish!" raised onTap={() => close(100)} />
-                    </div>
-                );
-            }
-        }
-
-        const di = dialog.alert("test", "Data");
-        console.log(await di.value);
     }
 
     render = () => {
-        const showData = data => {
-            dialog.alert({
-                message: <pre>{JSON.stringify(data, null, '  ')}</pre>,
-                title: "Data"
-            });
-        };
-
         return (
             <Doric.Screen title="Calendar Test">
+                <hr />
+                <Doric.Input.Multiline label="test" value={this.state.text} onChange={text => this.setState({text})} />
                 {/* <Calendar selectedDate={this.state.date} onChange={date => this.setState({date})} /> */}
             </Doric.Screen>
         );
