@@ -230,4 +230,10 @@ dialog.prompt = (options, ...others) => {
     });
 }
 
+dialog.spinner = (message) => dialog.show({
+    content: () => <div style={{textAlign: 'center'}}>{message}<Doric.Image width="100%" height={30} source={spinnerGIF} /></div>,
+    buttons: [],
+    disableEscape: true
+})
+
 window.dialog = dialog;

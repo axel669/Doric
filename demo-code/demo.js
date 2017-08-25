@@ -262,14 +262,6 @@ const Printer = () => {
     return <div>Printer</div>;
 };
 
-import spinnerGIF from 'source/data-uri/spinner.gif.source';
-
-dialog.spinner = (message) => dialog.show({
-    content: () => <div style={{textAlign: 'center'}}>{message}<Doric.Image width="100%" height={30} source={spinnerGIF} /></div>,
-    buttons: [],
-    disableEscape: true
-})
-
 class Main extends React.Component {
     constructor(props) {
         super(props);
