@@ -3,7 +3,6 @@ import React from 'react';
 import componentStyleSheet from 'source/util/app';
 import consts from 'source/util/consts';
 import {CSS} from 'source/util/stylesheet';
-import {warningFunc} from 'source/util/utils';
 
 import {CenterContent} from 'source/component/ContentAligners';
 import CustomEvents from "source/component/CustomEvents";
@@ -13,9 +12,7 @@ componentStyleSheet.addStyles({
     "doric-checkbox": {
         position: 'relative',
         display: 'block',
-        userSelect: 'none',
-        padding: 5,
-        minHeight: 30
+        userSelect: 'none'
     },
     "doric-checkbox[disabled='true']": {
         color: 'gray',
@@ -61,20 +58,13 @@ const Checkbox = props => {
     }
     const iconName = (checked === true) ? onIcon : offIcon;
     const padding = {
+        padding: 5,
         [`padding${side.charAt(0).toUpperCase()}${side.slice(1)}`]: 30
     };
-    const checkPosition = {};
-
-    if (side === 'center') {
-        checkPosition.left = 'calc(50% - 15px)';
-    }
-    else {
-        checkPosition[side] = 0;
-    }
 
     return (
         <CustomEvents component="doric-checkbox" class={className} onTap={change} {...passThrough} style={{...style, ...padding}} checked={checked}>
-            <CenterContent data-no-press style={{...checkPosition, top: 0, position: 'absolute'}} width={30} height="100%">
+            <CenterContent data-no-press style={{[side]: 0, top: 0, position: 'absolute'}} width={30} height="100%">
                 <Icon icon={iconName} data-no-press style={{fontSize: 26}} />
             </CenterContent>
             {label}{children}
