@@ -118,7 +118,7 @@ class Form extends React.Component {
                 <Layout {...layoutProps}>
                     {displayChildren}
                 </Layout>
-                <Doric.Button text="Submit" className="form-button" onTap={this.submit} raised />
+                <Doric.Button text={submitText} className="form-button" onTap={this.submit} raised />
             </doric-form>
         );
     }

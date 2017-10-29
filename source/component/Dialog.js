@@ -2,6 +2,8 @@ import React from 'react';
 
 import componentStyleSheet from 'source/util/app';
 
+import spinnerGIF from 'source/data-uri/spinner.gif.source';
+
 componentStyleSheet.addStyles({
     "doric-button[fill]": {
         width: '100%',
@@ -54,7 +56,7 @@ window.addEventListener(
     'keydown',
     evt => {
         if (evt.keyCode === 27 && dialogStack.length > 0) {
-            dialogStack.slice(-1)[0].close(null);
+            dialogStack.slice(-1)[0].escape(null);
         }
     }
 );
@@ -64,6 +66,7 @@ const dialog = {
             content: Content,
             props = {},
             title = null,
+            disableEscape = false,
             buttons = [
                 {text: "Ok", close: true}
             ]
@@ -94,12 +97,18 @@ const dialog = {
 
         let resolver;
         const valuePromise = new Promise(resolve => resolver = resolve);
+        const close = (value = null) => {
+            dialogStack.splice(dialogStack.indexOf(dobj), 1);
+            document.body.removeChild(renderElem);
+            resolver(value);
+        }
         const dobj = {
-            close(value = null) {
-                dialogStack.splice(dialogStack.indexOf(dobj), 1);
-                document.body.removeChild(renderElem);
-                resolver(value);
+            escape(value = null) {
+                if (disableEscape !== true) {
+                    close(value)
+                }
             },
+            close,
             value: valuePromise
         };
         let ref;
@@ -123,6 +132,11 @@ const dialog = {
         ReactDOM.render(container, renderElem);
 
         return dobj;
+    },
+    closeTop(value = null) {
+        if (dialogStack.length > 0) {
+            dialogStack.slice(-1)[0].close(value);
+        }
     }
 };
 dialog.alert = (options, ...others) => {
@@ -215,5 +229,11 @@ dialog.prompt = (options, ...others) => {
         }
     });
 }
+
+dialog.spinner = (message) => dialog.show({
+    content: () => <div style={{textAlign: 'center'}}>{message}<Doric.Image width="100%" height={30} source={spinnerGIF} /></div>,
+    buttons: [],
+    disableEscape: true
+})
 
 window.dialog = dialog;

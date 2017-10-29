@@ -99,15 +99,17 @@ componentStyleSheet.addStyles({
         display: 'block',
         margin: 3,
         paddingTop: 22,
+        verticalAlign: 'top',
         backgroundColor: 'white'
     },
     "doric-input-multiline > textarea": {
         width: '100%',
         borderWidth: 1,
         borderColor: 'lightgray',
-        padding: 5,
+        verticalAlign: 'top',
+        padding: 3,
         margin: 0,
-        borderBottom: `2px solid ${consts.theme.grayBG}`,
+        borderBottom: `2px solid #d0d0d0`,
         backgroundColor: 'transparent',
         position: 'relative',
         top: 0,
@@ -118,14 +120,30 @@ componentStyleSheet.addStyles({
     "doric-input-multiline > textarea:focus": {
         outline: 'none'
     },
-
+    "doric-input-multiline > textarea:focus ~ doric-input-label:not([placeholder])": {
+        color: '#435dec'
+    },
+    "doric-input-multiline > doric-input-label": {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        paddingLeft: 2,
+        height: 22,
+        transformOrigin: 'left top',
+        transform: 'translate(0, 3px) scale(0.85)',
+        transition: 'transform 150ms linear'
+    },
+    "doric-input-multiline > doric-input-label[placeholder]": {
+        transform: 'translate(5px, 100%)',
+        color: 'gray'
+    },
     "doric-input-multiline > textarea + doric-input-multiline-flourish": {
         position: 'absolute',
         height: 2,
-        backgroundColor: consts.theme.bluish,
+        backgroundColor: '#4285f4',
         left: 0,
         right: 0,
-        bottom: 4,
+        bottom: 0,
         transform: 'scaleX(0)',
         zIndex: "+2"
     },
@@ -137,8 +155,12 @@ componentStyleSheet.addStyles({
 const MultilineInput = (props) => {
     const {
         value,
+        label = null,
         lines = 3
     } = props;
+    const labelProps = {
+        placeholder: (value === "" || value === null) ? "" : null
+    };
     const poc = props.onChange || (() => {});
     const onChange = evt => poc(evt.target.value);
 
@@ -146,6 +168,7 @@ const MultilineInput = (props) => {
         <CustomEvents component="doric-input-multiline">
             <textarea value={value} onChange={onChange} rows={lines} />
             <doric-input-multiline-flourish />
+            <doric-input-label {...labelProps}>{label}</doric-input-label>
         </CustomEvents>
     );
 };
