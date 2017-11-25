@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route, hashHistory} from 'react-router';
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 
 import {createStyleSheet, genCSS} from 'source/util/stylesheet';
 
@@ -50,6 +50,7 @@ const navPush = url => routerComponent.router.push(url);
 const navPop = () => routerComponent.router.goBack();
 
 window.Route = Route;
+window.IndexRoute = IndexRoute;
 window.App = {
     async start(appRoutes) {
         await initialize();
